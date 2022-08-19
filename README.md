@@ -29,14 +29,14 @@ ERD
 | PATCH  | `/change-password/`    | `users#changepw`  |
 | DELETE | `/sign-out/`           | `users#signout`   |
 
-### HYMNS route table
+### SONGS route table
 
 | Verb   | URI Pattern            | Controller#Action |
 |--------|------------------------|-------------------|
-| GET    | `/view-hymn`        | `hymns#view`   |
-| POST   | `/create-hymn`      | `hymns#create`    |
-| PATCH  | `/edit-hymn/`       | `hymns#edit`  |
-| DELETE | `/delete-hymn/`     | `hymns#delete`   |
+| GET    | `/view-song`        | `songs#view`   |
+| POST   | `/create-song`      | `songs#create`    |
+| PATCH  | `/edit-song/`       | `songs#edit`  |
+| DELETE | `/delete-song/`     | `songs#delete`   |
 
 ### COMMUNITY MESSAGE BOARD route table
 
