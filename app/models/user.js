@@ -7,6 +7,12 @@ const userSchema = new mongoose.Schema(
 			required: true,
 			unique: true,
 		},
+		name: {
+			type: String,
+		},
+		vocalRange: {
+			type: String,
+		},
 		hashedPassword: {
 			type: String,
 			required: true,
