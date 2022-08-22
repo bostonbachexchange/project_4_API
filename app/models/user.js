@@ -12,6 +12,8 @@ const userSchema = new mongoose.Schema(
 		},
 		vocalRange: {
 			type: String,
+			enum: ['soprano', 'alot', 'tenor', 'base'],
+			default: 'soprano'
 		},
 		hashedPassword: {
 			type: String,

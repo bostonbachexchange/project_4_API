@@ -1,5 +1,6 @@
 const mongoose = require('mongoose')
-const user = require('./user')
+const commentSchema = require('./comment')
+// const user = require('./user')
 const { Schema, model } = mongoose
 
 const messageBoardSchema = new Schema(
@@ -18,6 +19,7 @@ const messageBoardSchema = new Schema(
 			type: Date,
 			default: Date.now,
 		},
+		comments: [commentSchema],
 		owner: {
 			type: Schema.Types.ObjectId,
 			ref: 'User',

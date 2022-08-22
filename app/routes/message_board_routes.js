@@ -17,6 +17,7 @@ const router = express.Router()
 // GET ALL MESSAGES FROM MESSAGEBOARD
 router.get('/messageboard', requireToken, (req, res, next) => {
 	MessageBoard.find()
+		.populate('owner')
 		.then((messageboard) => {
 			return messageboard.map((message) => message.toObject())
 		})
@@ -31,6 +32,7 @@ router.get('/messageboard', requireToken, (req, res, next) => {
 router.get('/messageboard/:id', requireToken, (req, res, next) => {
 	// req.params.id will be set based on the `:id` in the route
 	MessageBoard.findById(req.params.id)
+	.populate('owner')
 		.then(handle404)
 		// if `findById` is succesful, respond with 200 and "example" JSON
 		.then((message) => res.status(200).json({ message: message.toObject() }))
