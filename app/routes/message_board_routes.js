@@ -15,7 +15,7 @@ const router = express.Router()
 
 // INDEX
 // GET ALL MESSAGES FROM MESSAGEBOARD
-router.get('/messageboard', requireToken, (req, res, next) => {
+router.get('/messageboard', (req, res, next) => {
 	MessageBoard.find()
 		.populate('owner')
 		.then((messageboard) => {

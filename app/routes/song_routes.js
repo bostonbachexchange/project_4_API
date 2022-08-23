@@ -33,6 +33,7 @@ router.get('/songs', (req, res, next) => {
 router.get('/songs/:id', (req, res, next) => {
 	// req.params.id will be set based on the `:id` in the route
 	Song.findById(req.params.id)
+		.populate('owner')
 		.then(handle404)
 		// if `findById` is succesful, respond with 200 and "song" JSON
 		.then((song) => res.status(200).json({ song: song.toObject() }))
