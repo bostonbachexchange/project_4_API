@@ -35,6 +35,13 @@ router.get('/messageboard/:id', (req, res, next) => {
 	.populate('owner')
 		.then(handle404)
 		// if `findById` is succesful, respond with 200 and "example" JSON
+		// .then((message) => {
+		// 	if (message.comments) {
+		// 		console.log('message.comments', message.comments)
+		// 		// message.comments.find()
+		// 		// .populate('owner')
+		// 	}
+		// })
 		.then((message) => res.status(200).json({ message: message.toObject() }))
 		// if an error occurs, pass it to the handler
 		.catch(next)

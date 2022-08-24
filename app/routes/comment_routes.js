@@ -41,11 +41,11 @@ const router = express.Router()
 
 // CREATE
 // POST /comments/<message_id>
-router.post('/comments/:messageId', (req, res, next) => {
+router.post('/comments/:messageId', requireToken, (req, res, next) => {
 	// set owner of new example to be current user
-	// req.body.comment.owner = req.user.id
+	req.body.comment.owner = req.user.id
 	// console.log('req.body.comment.name', req.body.comment.name) 
-	console.log('req.user', req.data)
+	console.log('user', req.user)
 	const comment = req.body.comment
 	console.log('comment', comment)
 	const messageId = req.params.messageId
@@ -114,11 +114,11 @@ router.delete('/comments/:messageId/:commentId', requireToken, (req, res, next) 
 	const messageId = req.params.messageId
 	const commentId = req.params.commentId
 
-	MessageBoard.find(messageId)
+	MessageBoard.findById(messageId)
 		.then(handle404)
 		.then(message => {
 			const theComment = message.comments.id(commentId)
-			requireOwnership(req, message)
+			requireOwnership(req, theComment)
 			theComment.remove()
 			return message.save()
 		})
