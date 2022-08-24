@@ -15,6 +15,7 @@ const userSchema = new mongoose.Schema(
 			enum: ['soprano', 'alot', 'tenor', 'base'],
 			default: 'soprano'
 		},
+		myList: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Song' }],
 		hashedPassword: {
 			type: String,
 			required: true,

@@ -11,16 +11,20 @@ const bcryptSaltRounds = 10
 
 // pull in error types and the logic to handle them and set status codes
 const errors = require('../../lib/custom_errors')
+const customErrors = require('../../lib/custom_errors')
+const handle404 = customErrors.handle404
 
 const BadParamsError = errors.BadParamsError
 const BadCredentialsError = errors.BadCredentialsError
 
 const User = require('../models/user')
+const Song = require('../models/song')
 
 // passing this as a second argument to `router.<verb>` will make it
 // so that a token MUST be passed for that route to be available
 // it will also set `res.user`
 const requireToken = passport.authenticate('bearer', { session: false })
+const removeBlanks = require('../../lib/remove_blank_fields')
 
 // instantiate a router (mini app that only handles routes)
 const router = express.Router()
@@ -136,6 +140,38 @@ router.patch('/change-password', requireToken, (req, res, next) => {
 		.catch(next)
 })
 
+////////////////////////
+// Add a song to users repertoire
+////////////////////////
+// PATCH /user/<song_id>/<user_id>
+router.patch('/user/:songId/:userId', requireToken, removeBlanks, (req, res, next) => {
+    // get the service and the user ids saved to variables
+    const songId = req.params.songId
+    const userId = req.params.userId
+	// let songList;
+	Song.findById(songId)
+		.then(handle404)
+		.then(song => {
+			// console.log('here is song', song)
+			// songList = song
+			// // console.log('here is the songList', songList)
+			// return;
+			req.user.myList.push(song)
+            console.log('here is the user after the push', req.user)
+            return req.user.save()
+		})
+		.catch(next)
+    // find our User
+    // User.findById(userId)
+    //     .then(handle404)
+    //     .then(user => {
+    //         user.myList.push(songList)
+    //         console.log('here is the user after the push', user)
+    //         return user.save()
+    //     })
+        .then(() => res.sendStatus(204))
+        .catch(next)
+})
 router.delete('/sign-out', requireToken, (req, res, next) => {
 	// create a new random token for the user, invalidating the current one
 	req.user.token = crypto.randomBytes(16)

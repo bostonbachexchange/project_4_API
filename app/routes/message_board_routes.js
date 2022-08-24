@@ -32,8 +32,14 @@ router.get('/messageboard', (req, res, next) => {
 router.get('/messageboard/:id', (req, res, next) => {
 	// req.params.id will be set based on the `:id` in the route
 	MessageBoard.findById(req.params.id)
-	.populate('owner')
+		.populate(['owner', 'comments.owner'])
 		.then(handle404)
+
+		// .populate({
+		// 	path:     'comments',			
+		// 	populate: { path:  'owner',
+		// 			model: 'users' }
+		//   })
 		// if `findById` is succesful, respond with 200 and "example" JSON
 		// .then((message) => {
 		// 	if (message.comments) {
