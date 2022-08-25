@@ -12,6 +12,7 @@ const removeBlanks = require('../../lib/remove_blank_fields')
 const requireToken = passport.authenticate('bearer', { session: false })
 const router = express.Router()
 
+
 // INDEX
 // GET ALL SONGS 
 router.get('/songs', (req, res, next) => {
@@ -33,7 +34,7 @@ router.get('/songs', (req, res, next) => {
 router.get('/songs/:id', (req, res, next) => {
 	// req.params.id will be set based on the `:id` in the route
 	Song.findById(req.params.id)
-		.populate('owner')
+		.populate(['owner', 'owner.myList'])
 		.then(handle404)
 		// if `findById` is succesful, respond with 200 and "song" JSON
 		.then((song) => res.status(200).json({ song: song.toObject() }))

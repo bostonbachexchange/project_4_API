@@ -28,6 +28,14 @@ const removeBlanks = require('../../lib/remove_blank_fields')
 
 // instantiate a router (mini app that only handles routes)
 const router = express.Router()
+		function getUserWithMyList(user){
+			return User.findOne({ user: user })
+			  .populate('myList').exec((err, myList) => {
+				console.log("Populated User " + myList);
+			  })
+		  }
+		  getUserWithMyList()
+		
 
 // SIGN UP
 // POST /sign-up
@@ -161,16 +169,25 @@ router.patch('/user/:songId/:userId', requireToken, removeBlanks, (req, res, nex
             return req.user.save()
 		})
 		.catch(next)
+		// function getUserWithMyList(user){
+		// 	return User.findOne({ user: user })
+		// 	  .populate('myList').exec((err, myList) => {
+		// 		console.log("Populated User " + myList);
+		// 	  })
+		//   }
+		//   getUserWithMyList()
+		
     // find our User
     // User.findById(userId)
+	// 	// .populate('myList')
     //     .then(handle404)
     //     .then(user => {
-    //         user.myList.push(songList)
+    //         // user.myList.push(songList)
     //         console.log('here is the user after the push', user)
     //         return user.save()
     //     })
-        .then(() => res.sendStatus(204))
-        .catch(next)
+    //     .then(() => res.sendStatus(204))
+    //     .catch(next)
 })
 router.delete('/sign-out', requireToken, (req, res, next) => {
 	// create a new random token for the user, invalidating the current one
