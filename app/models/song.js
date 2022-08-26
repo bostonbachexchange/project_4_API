@@ -28,6 +28,9 @@ const songSchema = new Schema(
 		embedId: {
 			type: String,
 		},
+		url: {
+			type: String,
+		},
 		owner: {
 			type: Schema.Types.ObjectId,
 			ref: 'User',

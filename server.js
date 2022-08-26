@@ -1,13 +1,19 @@
 // require necessary NPM packages
 const express = require('express')
+const multer  = require('multer')
+const upload = multer({ dest: 'uploads/' })
 const mongoose = require('mongoose')
 const cors = require('cors')
+
+//////AWS
+const { uploadFile } = require('./s3')
 
 // require route files
 const exampleRoutes = require('./app/routes/example_routes')
 const userRoutes = require('./app/routes/user_routes')
 const messageRoutes = require('./app/routes/message_board_routes')
 const songRoutes = require('./app/routes/song_routes')
+const uploadRoutes = require('./app/routes/upload_routes')
 const commentRoutes = require('./app/routes/comment_routes')
 
 // require middleware
@@ -73,6 +79,7 @@ app.use(userRoutes)
 app.use(messageRoutes)
 app.use(commentRoutes)
 app.use(songRoutes)
+app.use(uploadRoutes)
 
 // register error handling middleware
 // note that this comes after the route middlewares, because it needs to be

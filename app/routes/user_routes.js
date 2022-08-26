@@ -28,13 +28,13 @@ const removeBlanks = require('../../lib/remove_blank_fields')
 
 // instantiate a router (mini app that only handles routes)
 const router = express.Router()
-		function getUserWithMyList(user){
-			return User.findOne({ user: user })
-			  .populate('myList').exec((err, myList) => {
-				console.log("Populated User " + myList);
-			  })
-		  }
-		  getUserWithMyList()
+// 		function getUserWithMyList(user){
+// 			return User.findOne({ user: user })
+// 			  .populate('myList').exec((err, myList) => {
+// 				console.log("Populated User " + myList);
+// 			  })
+// 		  }
+// 		  getUserWithMyList()
 		
 
 // SIGN UP
@@ -82,6 +82,8 @@ router.post('/sign-in', (req, res, next) => {
 
 	// find a user based on the email that was passed
 	User.findOne({ email: req.body.credentials.email })
+		.populate('myList')
+		.then(handle404)
 		.then((record) => {
 			// if we didn't find a user with that email, send 401
 			if (!record) {

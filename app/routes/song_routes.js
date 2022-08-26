@@ -1,7 +1,9 @@
 // Express docs: http://expressjs.com/en/api.html
 const express = require('express')
 const passport = require('passport')
-
+const multer  = require('multer')
+const upload = multer({ dest: 'uploads/' })
+const mongoose = require('mongoose')
 // pull in Mongoose model for songs
 const User = require('../models/user')
 const Song = require('../models/song')
@@ -9,6 +11,8 @@ const customErrors = require('../../lib/custom_errors')
 const handle404 = customErrors.handle404
 const requireOwnership = customErrors.requireOwnership
 const removeBlanks = require('../../lib/remove_blank_fields')
+const app = require('../../server')
+const { uploadFile } = require('../../s3')
 const requireToken = passport.authenticate('bearer', { session: false })
 const router = express.Router()
 
@@ -34,7 +38,7 @@ router.get('/songs', (req, res, next) => {
 router.get('/songs/:id', (req, res, next) => {
 	// req.params.id will be set based on the `:id` in the route
 	Song.findById(req.params.id)
-		.populate(['owner', 'owner.myList'])
+		.populate('owner')
 		.then(handle404)
 		// if `findById` is succesful, respond with 200 and "song" JSON
 		.then((song) => res.status(200).json({ song: song.toObject() }))
@@ -42,9 +46,42 @@ router.get('/songs/:id', (req, res, next) => {
 		.catch(next)
 })
 
+// AWS ???
+// app.post('/images', upload.single('image'), async (req, res) => {
+// 	const file = req.file
+// 	console.log(file)
+// 	const result = await uploadFile(file)
+// 	console.log(result)
+// 	// const description = req.body.description
+// 	res.send('👌')
+// })
+
 // CREATE
 // POST /create-song
-router.post('/create-song', requireToken, (req, res, next) => {
+// frankenstein code
+// router.post('/create-song', requireToken, upload.single('image'), (req, res, next) => {
+// 	// set owner of new song to be current user
+// 	req.body.song.owner = req.user.id
+// // 	const file = req.file
+// // 	console.log(file)
+// // 	const result = await uploadFile(file)
+// // 	console.log(result)
+// // 	// const description = req.body.description
+// // 	res.send('👌')
+// // })
+// 	Song.create(req.body.song)
+// 		// respond to succesful `create` with status 201 and JSON of new "song"
+// 		.then((song) => {
+// 			res.status(201).json({ song: song.toObject() })
+// 		})
+// 		// if an error occurs, pass it off to our error handler
+// 		// the error handler needs the error message and the `res` object so that it
+// 		// can send an error message back to the client
+// 		.catch(next)
+// })
+
+//not broken
+router.post('/create-song', requireToken,(req, res, next) => {
 	// set owner of new song to be current user
 	req.body.song.owner = req.user.id
 
