@@ -14,6 +14,8 @@ const database = {
 // select DB based on whether a test file was executed before `server.js`
 const localDb = process.env.TESTENV ? database.test : database.development
 
+// mongodb+srv://jclapper:ifthewheelsfalloffweridethehubcaps@projectcrud.hvhcg.mongodb.net/harmony-haven?retryWrites=true&w=majority
+
 // Environment variable MONGODB_URI will be available in
 // heroku production evironment otherwise use test or development db
 const currentDb = process.env.MONGODB_URI || localDb
