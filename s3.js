@@ -35,7 +35,9 @@ require('dotenv').config()
 const AWS = require ('aws-sdk')
 // Create S3 service object
 const s3 = new AWS.S3({apiVersion: '2006-03-01'})
-
+// AWS_SDK_LOAD_CONFIG=1
+// export AWS_ACCESS_KEY_ID = your_access_key_id
+// export AWS_SECRET_ACCESS_KEY = your_secret_access_key
 //
 
 // const bucketName = process.env.AWS_BUCKET_NAME
