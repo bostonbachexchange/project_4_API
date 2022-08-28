@@ -191,6 +191,46 @@ router.patch('/user/:songId/:userId', requireToken, removeBlanks, (req, res, nex
     //     .then(() => res.sendStatus(204))
     //     .catch(next)
 })
+////////////////////////
+// Add a song to users repertoire
+////////////////////////
+// DELETE /user/<song_id>/<user_id>
+router.delete('/user/:songId/:userId', requireToken, removeBlanks, (req, res, next) => {
+    const songId = req.params.songId
+    // const userId = req.user._id
+	// console.log(here is the )
+	Song.findById(songId)
+		.then(handle404)
+		.then(song => {
+			req.user.myList.remove(song)
+            console.log('here is the user after the push', req.user)
+            return req.user.save()
+		})
+		.then(() => res.sendStatus(204))
+		.catch(next)
+})
+// UPDATE
+// PATCH /songs/5a7db6c74d55bc51bdf39793
+// router.patch('/songs/:id', requireToken, removeBlanks, (req, res, next) => {
+// 	// if the client attempts to change the `owner` property by including a new
+// 	// owner, prevent that by deleting that key/value pair
+// 	delete req.body.song.owner
+
+// 	Song.findById(req.params.id)
+// 		.then(handle404)
+// 		.then((song) => {
+// 			// pass the `req` object and the Mongoose record to `requireOwnership`
+// 			// it will throw an error if the current user isn't the owner
+// 			requireOwnership(req, song)
+
+// 			// pass the result of Mongoose's `.update` to the next `.then`
+// 			return song.updateOne(req.body.song)
+// 		})
+// 		// if that succeeded, return 204 and no JSON
+// 		.then(() => res.sendStatus(204))
+// 		// if an error occurs, pass it to the handler
+// 		.catch(next)
+// })
 router.delete('/sign-out', requireToken, (req, res, next) => {
 	// create a new random token for the user, invalidating the current one
 	req.user.token = crypto.randomBytes(16)
