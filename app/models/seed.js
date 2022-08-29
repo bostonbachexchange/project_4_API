@@ -4,11 +4,11 @@ const db = require('../../config/db')
 
 const startSongs = [
     { title: 'May Nothing Evil Cross This Door #1', composer: 'Robert N. Quaile', lyricist: 'Louis Untermeyer', type: 'Hymn',
-    lyrics: '',
-    scorePDF: '', recordings: 'https://www.youtube.com/watch?v=C4rSAIts3MA', embedId: "C4rSAIts3MA", owner: '63019e76310352fced45f3b7'},
+    lyrics: '|`|May nothing evil cross this door,|and may ill fortune never pry about|these windows; may the roar|and rain go by.| `|By faith made strong, the rafters will|withstand the battering of the storm.|This hearth, though all the world grow chill,|will keep you warm.|`|Peace shall walk softly |through these rooms,|touching our lips with holy wine,|till every casual corner blooms|into a shrine.|`|With laughter drown the raucous shout,|and, though these sheltering walls are thin,|may they be strong to keep hate out|and hold love in.',
+    scorePDF: '', recordings: 'jobim', embedId: "C4rSAIts3MA", owner: '63019e76310352fced45f3b7'},
     { title: 'Down the Ages We Have Trod #2', composer: 'THOMAS (TOM) BENJAMIN', lyricist: 'JOHN ANDREW STOREY', type: 'Hymn',
     lyrics: '',
-    scorePDF: '', recordings: '', owner: '63019e76310352fced45f3b7'},
+    scorePDF: '', recordings: 'chopin', owner: '63019e76310352fced45f3b7'},
     { title: 'The World Stands Out on Either Side #3', composer: 'W. FREDERICK WOODEN', lyricist: 'Edna St. Vincent Millay', type: 'Hymn',
     lyrics: '',
     scorePDF: '', recordings: '', owner: '63019b25ae6e795c6c8e9eb7'},

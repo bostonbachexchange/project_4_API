@@ -118,7 +118,7 @@ router.delete('/comments/:messageId/:commentId', requireToken, (req, res, next) 
 		.then(handle404)
 		.then(message => {
 			const theComment = message.comments.id(commentId)
-			requireOwnership(req, theComment)
+			// requireOwnership(req, theComment)
 			theComment.remove()
 			return message.save()
 		})
