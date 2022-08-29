@@ -20,7 +20,7 @@ const router = express.Router()
 // INDEX
 // GET ALL SONGS 
 router.get('/songs', (req, res, next) => {
-	Song.find()
+	Song.find().sort({type: 1})
 		.then((songs) => {
 			// `songs` will be an array of Mongoose documents
 			// we want to convert each one to a POJO, so we use `.map` to

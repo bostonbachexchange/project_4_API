@@ -16,6 +16,9 @@ const songSchema = new Schema(
 		type: {
 			type: String,
 		},
+		hymnNumber: {
+			type: Number,
+		},
 		lyrics: {
 			type: String,
 		},
