@@ -41,8 +41,9 @@ const router = express.Router()
 
 // CREATE
 // POST /comments/<message_id>
-router.post('/comments/:messageId', requireToken, (req, res, next) => {
+router.post('/create-comments/:messageId', requireToken, (req, res, next) => {
 	// set owner of new example to be current user
+	console.log('create comment route hit')
 	req.body.comment.owner = req.user.id
 	// console.log('req.body.comment.name', req.body.comment.name) 
 	console.log('user', req.user)
@@ -75,17 +76,32 @@ router.post('/comments/:messageId', requireToken, (req, res, next) => {
 router.patch('/comments/:messageId/:commentId', requireToken, removeBlanks, (req, res, next) => {
 	const messageId = req.params.messageId
 	const commentId = req.params.commentId
+	console.log('update comment route hit in API')
+	console.log("messageId")
+	console.log(messageId)
+	console.log("commentId")
+	console.log(commentId)
+	console.log("req.body.comment")
+	console.log(req.body.comment)
+		// MessageBoard.update({_id:messageId, "comments.id":commentId}, {$set:req.body.comment}, {upsert:true})
+		// MessageBoard.findOneAndUpdate({_id:messageId, "comments._id":commentId}, {$set:{
+		// 	content:req.body.comment}}, function(error, comment){
+		// 		res.sendStatus(204)
+		// 	}) 
 
 	MessageBoard.findById(messageId)
 		.then(handle404)
 		.then(message => {
+			console.log('message.comments', message.comments)
 			const theComment = message.comments.id(commentId)
+			// const theComment = message.comments.{commentId}
 			// ?? I think this will allow the owner who created the post to edit the comments ?? We want the commenter to edit their comments
 			// requireOwnership(req, message)
+			// message.comments.update({_id:commentId}, {$set:req.body.comment})
 			theComment.set(req.body.comment)
 			return message.save()
 		})
-		.then(() => res.sendStatus(204))
+		.then(() => res.sendStatus(200))
 		.catch(next)
 	// if the client attempts to change the `owner` property by including a new
 	// owner, prevent that by deleting that key/value pair

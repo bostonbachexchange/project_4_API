@@ -84,6 +84,7 @@ router.patch('/messageboard/:id', requireToken, removeBlanks, (req, res, next) =
 		.then((message) => {
 			// pass the `req` object and the Mongoose record to `requireOwnership`
 			// it will throw an error if the current user isn't the owner
+			console.log('update messate route in api hit')
 			requireOwnership(req, message)
 
 			// pass the result of Mongoose's `.update` to the next `.then`
