@@ -1,5 +1,12 @@
 # HARMONY HAVEN
 
+## Deployment Link
+Deplyed on Heroku 
+https://dashboard.heroku.com/apps/harmonyhaven
+
+## Link to frontend client
+GitHub Client Repo https://github.com/bostonbachexchange/project_4_Client
+
 ## Pitch
 CHORDIALLY YOURS is a choir app that will take your choir to the next level. 
 
